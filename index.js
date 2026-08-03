@@ -36,12 +36,33 @@ app.get("/api/enquiry-list", async (req, res) => {
 
 app.delete("/api/enquiry-delete/:id", async (req, res) => {
   let enquiryId = req.params.id;
-  let deletedEnquiry=await enquiryModel.deleteOne({_id:enquiryId});
+  let deletedEnquiry = await enquiryModel.deleteOne({ _id: enquiryId });
   res.send({
     status: 1,
     message: "Enquiry Deleted Successfully",
     id: enquiryId,
-    delRes:deletedEnquiry
+    delRes: deletedEnquiry,
+  });
+});
+
+app.put("/api/enquiry-update/:id", async (req, res) => {
+  let enquiryId = req.params.id;
+  let { sName, sEmail, sPhone, sMessage } = req.body;
+
+  let updateObj = {
+    name: sName,
+    email: sEmail,
+    phone: sPhone,
+    message: sMessage,
+  };
+  let enquiryUpdate = await enquiryModel.updateOne(
+    { _id: enquiryId },
+    updateObj,
+  );
+  res.send({
+    status: 1,
+    message: "Enquiry Updated Successfully",
+    UpdateRes: enquiryUpdate,
   });
 });
 
