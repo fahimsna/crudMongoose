@@ -25,8 +25,9 @@ app.post("/api/enquiry-insert", (req, res) => {
     });
 });
 
-app.get("/api/enquiry-list",(req,res)=>{
-  res.send({status:1,message:"Enquiry List",data:[]})
+app.get("/api/enquiry-list",async(req,res)=>{
+  let enquireList=await enquiryModel.find();
+  res.send({status:1,message:"Enquiry List",data:enquireList})
 })
 
 mongoose.connect(process.env.DBURL).then(() => {
